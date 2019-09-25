@@ -1,0 +1,16 @@
+{
+  "name": "monitoring",
+  "description": "",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint . --max-warnings 0",
+    "start": "sls offline start --watch --webpack-use-polling --isLocal=true"
+  },
+  "dependencies": {
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
+    "mysql": "^2.16.0",
+    "request": "^2.88.0",
+    "sprintf-js": "^1.1.2"
+  },
+  "private": true
+}
