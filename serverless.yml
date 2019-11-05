@@ -70,6 +70,51 @@ functions:
           path: alerts
           method: post
       - schedule: cron(0 14 * * ? *)
+  pending-closed-alerts:
+    handler: handler.generatePendingClosedSummary
+#    The following are a few example events you can configure
+#    NOTE: Please make sure to change your handler code to work with those events
+#    Check the event documentation for details
+    events:
+      - http:
+          path: alerts/pending-closed-maintenance
+          method: get
+      - http:
+          path: alerts/pending-closed-maintenance
+          method: post
+      - schedule: cron(0 14 * * ? *)
+  pending-resubmit-alerts:
+    handler: handler.generatePendingResubmitSummary
+#    The following are a few example events you can configure
+#    NOTE: Please make sure to change your handler code to work with those events
+#    Check the event documentation for details
+    events:
+      - http:
+          path: alerts/pending-resubmit-maintenance
+          method: get
+      - http:
+          path: alerts/pending-resubmit-maintenance
+          method: post
+      - schedule: cron(0 14 * * ? *)
+  # failed-crawls:
+  #   handler: handler.generateFailedCrawlsReport
+  #   events:
+  #     - http:
+  #         path: failed-crawls
+  #         method: get
+  #     - http:
+  #         path: failed-crawls
+  #         method: post
+  # slack-action:
+  #   handler: handler.handleSlackAction
+  #   events:
+  #     - http:
+  #         path: slack-action
+  #         method: get
+  #     - http:
+  #         path: slack-action
+  #         method: post
+      #- schedule: cron(0 14 * * ? *)
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
