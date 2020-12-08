@@ -44,8 +44,13 @@ provider:
 #            - "/*"
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  environment:
+    DB_HOST: sharkdbprod2.ckqx2iyfs9ic.us-east-2.rds.amazonaws.com
+    DB_USERNAME: ipshark
+    DB_DATABASE: ipshark
+    DB_PASSWORD: l0ppIzbJDbom77pcXg6I7SEkSODAeO
+    #SLACK_CHANNEL: crawler-alerts
+    SLACK_CHANNEL: ben-test
 
 # you can add packaging information here
 #package:
@@ -68,6 +73,19 @@ functions:
           method: get
       - http:
           path: alerts
+          method: post
+      - schedule: cron(0 14 * * ? *)
+  crawl-trend-alerts:
+    handler: handler.generateSlackTrendAlert
+#    The following are a few example events you can configure
+#    NOTE: Please make sure to change your handler code to work with those events
+#    Check the event documentation for details
+    events:
+      - http:
+          path: alerts/trends
+          method: get
+      - http:
+          path: alerts/trends
           method: post
       - schedule: cron(0 14 * * ? *)
   pending-closed-alerts:
@@ -96,6 +114,18 @@ functions:
           path: alerts/pending-resubmit-maintenance
           method: post
       - schedule: cron(0 14 * * ? *)
+  crawl-metadata:
+    handler: handler.generateCrawlMetadata
+    events:
+      - http:
+          path: crawls/metadata
+          method: get
+  create-crawl:
+    handler: handler.createCrawl
+    events:
+      - http:
+          path: crawls
+          method: post
   # failed-crawls:
   #   handler: handler.generateFailedCrawlsReport
   #   events:
