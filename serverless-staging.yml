@@ -1,0 +1,102 @@
+service: monitoring
+#app: your-app-name
+#tenant: your-tenant-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+# you can overwrite defaults here
+  stage: prod
+  region: us-east-1
+
+# you can define service wide environment variables here
+  environment:
+    DB_HOST: sharkdbprod2.ckqx2iyfs9ic.us-east-2.rds.amazonaws.com
+    DB_USERNAME: ipshark
+    DB_DATABASE: ipshark
+    DB_PASSWORD: l0ppIzbJDbom77pcXg6I7SEkSODAeO
+    #SLACK_CHANNEL: crawler-alerts
+    SLACK_CHANNEL: ben-test
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+functions:
+  crawl-alerts:
+    handler: handler.generateSlackAlert
+#    The following are a few example events you can configure
+#    NOTE: Please make sure to change your handler code to work with those events
+#    Check the event documentation for details
+    events:
+      - http:
+          path: alerts
+          method: get
+      - http:
+          path: alerts
+          method: post
+      - schedule: cron(0 14 * * ? *)
+  crawl-trend-alerts:
+    handler: handler.generateSlackTrendAlert
+#    The following are a few example events you can configure
+#    NOTE: Please make sure to change your handler code to work with those events
+#    Check the event documentation for details
+    events:
+      - http:
+          path: alerts/trends
+          method: get
+      - http:
+          path: alerts/trends
+          method: post
+      - schedule: cron(0 14 * * ? *)
+  pending-closed-alerts:
+    handler: handler.generatePendingClosedSummary
+#    The following are a few example events you can configure
+#    NOTE: Please make sure to change your handler code to work with those events
+#    Check the event documentation for details
+    events:
+      - http:
+          path: alerts/pending-closed-maintenance
+          method: get
+      - http:
+          path: alerts/pending-closed-maintenance
+          method: post
+      - schedule: cron(0 14 * * ? *)
+  pending-resubmit-alerts:
+    handler: handler.generatePendingResubmitSummary
+#    The following are a few example events you can configure
+#    NOTE: Please make sure to change your handler code to work with those events
+#    Check the event documentation for details
+    events:
+      - http:
+          path: alerts/pending-resubmit-maintenance
+          method: get
+      - http:
+          path: alerts/pending-resubmit-maintenance
+          method: post
+      - schedule: cron(0 14 * * ? *)
+  crawl-metadata:
+    handler: handler.generateCrawlMetadata
+    events:
+      - http:
+          path: crawls/metadata
+          method: get
+  create-crawl:
+    handler: handler.createCrawl
+    events:
+      - http:
+          path: crawls
+          method: post
+  
+#       Description: "Description for the output"
+#       Value: "Some output value"
