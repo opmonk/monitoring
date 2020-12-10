@@ -11,8 +11,8 @@ provider:
   runtime: nodejs10.x
 
 # you can overwrite defaults here
-  stage: prod
-  region: us-east-1
+  stage: staging
+  region: us-east-2
 
 # you can define service wide environment variables here
   environment:
