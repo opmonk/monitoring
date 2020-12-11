@@ -8,7 +8,7 @@ moment().tz("America/Los_Angeles").format();
 var querystring = require('querystring');
 
 const CHANNEL = process.env.SLACK_CHANNEL || 'ben-test';
-const SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || 'https://hooks.slack.com/services/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';
 const numOfCycles = 4;
 
 

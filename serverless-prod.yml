@@ -16,6 +16,7 @@ provider:
     DB_DATABASE: ipshark
     DB_PASSWORD: l0ppIzbJDbom77pcXg6I7SEkSODAeO
     SLACK_CHANNEL: crawler-alerts
+    SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
 
 # you can add packaging information here
 #package:
